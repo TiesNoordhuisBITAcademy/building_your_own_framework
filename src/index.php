@@ -1,5 +1,9 @@
 <?php
 
+namespace BYOF;
+
+require_once '../vendor/autoload.php';
+
 $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 @list(, $controller, $method) = explode('/', $urlPath);
@@ -14,12 +18,12 @@ if (!file_exists("controllers/{$controller}Controller.php")) {
     header('HTTP/1.0 404 Not Found');
     exit();
 }
-require $controllerPath;
-$controller = new $controllerName();
 
-if (!method_exists($controller, $methodName)) {
+$controller = new ("\BYOF\controllers\\{$controller}Controller")("");
+
+if (!method_exists($controller, $method)) {
     header('HTTP/1.0 404 Not Found');
     exit();
 }
 
-$controller->methodName();
+$controller->$method();

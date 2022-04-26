@@ -1,0 +1,17 @@
+{
+    "name": "tiesbitacademy/byof",
+    "description": "my own building your own framework implementation",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "BYOF\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ties Noordhuis",
+            "email": "ties@bit-academy.nl"
+        }
+    ],
+    "require": {}
+}
