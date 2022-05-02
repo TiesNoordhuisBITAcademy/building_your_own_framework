@@ -19,7 +19,7 @@ if (!file_exists("controllers/{$controller}Controller.php")) {
     exit();
 }
 
-$controller = new ("\BYOF\controllers\\{$controller}Controller")("");
+$controller = new ("BYOF\controllers\\{$controller}Controller")("");
 
 if (!method_exists($controller, $method)) {
     header('HTTP/1.0 404 Not Found');
