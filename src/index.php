@@ -27,6 +27,7 @@ if (
     || !method_exists($controllerClassPath, $methodName)
 ) {
     $viewService->display('@errors/404.html', statusCode: 404);
+    exit();
 }
 
 $controller = new $controllerClassPath($viewService);
