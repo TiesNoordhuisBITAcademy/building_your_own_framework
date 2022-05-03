@@ -14,9 +14,4 @@ class BaseController
     {
         $this->view = $viewService;
     }
-
-    public function display(string $template, array $data = []): void
-    {
-        $this->view->display($template, $data);
-    }
 }
