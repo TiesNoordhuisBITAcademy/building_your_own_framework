@@ -4,24 +4,19 @@ declare(strict_types = 1);
 
 namespace BYOF\controllers;
 
-use Twig\Environment as TwigEnvironment;
+use BYOF\services\ViewService;
 
 class BaseController
 {
-    protected $twig;
+    protected ViewService $view;
 
-    public function __construct(TwigEnvironment $twig)
+    public function __construct(ViewService $viewService)
     {
-        $this->twig = $twig;
+        $this->view = $viewService;
     }
 
-    /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
-     */
-    protected function display(string $template, array $data = [])
+    public function display(string $template, array $data = []): void
     {
-        $this->twig->display($template, $data);
+        $this->view->display($template, $data);
     }
 }

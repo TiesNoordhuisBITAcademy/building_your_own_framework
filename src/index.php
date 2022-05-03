@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BYOF;
 
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
+use BYOF\services\ViewService;
 
 require_once '../vendor/autoload.php';
 
@@ -19,16 +20,14 @@ header("X-Method: $methodName");
 
 $controllerClassPath = "BYOF\controllers\\{$controllerName}Controller";
 
+$viewService = new ViewService();
+
 if (
     !class_exists($controllerClassPath)
     || !method_exists($controllerClassPath, $methodName)
 ) {
-    header('HTTP/1.0 404 Not Found');
-    exit();
+    $viewService->display('@errors/404.html', statusCode: 404);
 }
 
-$twigLoader = new FilesystemLoader('./views');
-$twig = new Environment($twigLoader);
-
-$controller = new $controllerClassPath($twig);
+$controller = new $controllerClassPath($viewService);
 $controller->$methodName();
