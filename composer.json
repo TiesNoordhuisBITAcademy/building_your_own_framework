@@ -13,5 +13,7 @@
             "email": "ties@bit-academy.nl"
         }
     ],
-    "require": {}
+    "require": {
+        "twig/twig": "^3.3"
+    }
 }
