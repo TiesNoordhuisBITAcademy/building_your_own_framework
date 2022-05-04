@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BYOF\services;
 
-use \Twig\Environment as TwigEnvironment;
-use \Twig\Error\Error as TwigError;
-use \Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
+use Twig\Environment as TwigEnvironment;
+use Twig\Error\Error as TwigError;
+use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 
 class ViewService
 {
@@ -39,5 +39,12 @@ class ViewService
         error_log($logMessage);
         http_response_code(500);
         exit();
+    }
+
+    public function addPath(string $path, string $namespace): void
+    {
+        if (empty($this->loader->getPaths($namespace))) {
+            $this->loader->addPath($path, $namespace);
+        }
     }
 }

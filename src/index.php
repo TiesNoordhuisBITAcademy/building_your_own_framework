@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace BYOF;
 
-use BYOF\services\ViewService;
-
 require_once '../vendor/autoload.php';
+
+use BYOF\services\ViewService;
 
 $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -29,6 +29,7 @@ if (
     $viewService->display('@errors/404.html', statusCode: 404);
     exit();
 }
+
 
 $controller = new $controllerClassPath($viewService);
 $controller->$methodName();
