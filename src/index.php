@@ -14,6 +14,12 @@ $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $controllerName = !empty($controllerName) ? ucfirst($controllerName) : 'Home';
 $methodName = !empty($methodName) ? $methodName : 'index';
+$methodName .= match ($_SERVER['REQUEST_METHOD']) {
+    'POST' => 'Post',
+    'PUT' => 'Put',
+    'DELETE' => 'Delete',
+    default => '',
+};
 
 header("X-Controller: $controllerName");
 header("X-Method: $methodName");

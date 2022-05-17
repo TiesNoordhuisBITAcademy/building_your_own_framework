@@ -7,9 +7,22 @@
 <body>
     <h1>Boeken</h1>
     <a href="/"><h2>Home</h2></a>
-    <ul>
-    {% for book in books %}
-        <li>{{ book.title }}</li>
-    {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Auteur</th>
+                <th>Uitgever</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.__get('author').first_name }} {{ book.__get('author').last_name }}</td>
+                <td>{{ book.publisher }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>

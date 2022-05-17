@@ -12,4 +12,9 @@ class BookService extends ORMService
     {
         return R::findAll('book');
     }
+
+    public function addBook(array $book): void
+    {
+        R::store(R::dispense('book')->import($book));
+    }
 }

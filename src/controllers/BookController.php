@@ -21,4 +21,17 @@ class BookController extends BaseController
         $books = $this->bookService->getAllBooks();
         $this->viewService->display('@books/index.html', ['books' => $books]);
     }
+
+    public function addBook()
+    {
+        $this->viewService->display('@books/add.html');
+    }
+
+    public function addBookPost()
+    {
+        $book = $_POST;
+        $this->bookService->addBook($book);
+        header("location: /books");
+        exit();
+    }
 }

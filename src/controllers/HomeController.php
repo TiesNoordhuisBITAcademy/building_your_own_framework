@@ -21,4 +21,8 @@ class HomeController extends BaseController
         exit();
     }
 
+    public function info()
+    {
+        echo phpinfo();
+    }
 }
