@@ -10,7 +10,7 @@ use BYOF\services\ViewService;
 
 $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-@list(, $controllerName, $methodName) = explode('/', $urlPath);
+@[, $controllerName, $methodName, $arguments] = explode('/', $urlPath, 4);
 
 $controllerName = !empty($controllerName) ? ucfirst($controllerName) : 'Home';
 $methodName = !empty($methodName) ? $methodName : 'index';
@@ -38,4 +38,8 @@ if (
 
 
 $controller = new $controllerClassPath($viewService);
+$methodParams = getMethodParams($controllerClassPath, $methodName);
+if (count($methodParams) > 0) {
+    $controller->$methodName(...mapArgumentsToParams($arguments, $methodParams));
+}
 $controller->$methodName();

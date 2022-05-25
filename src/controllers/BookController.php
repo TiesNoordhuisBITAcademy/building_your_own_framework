@@ -34,4 +34,10 @@ class BookController extends BaseController
         header("location: /books");
         exit();
     }
+
+    public function view(int $id)
+    {
+        $book = $this->bookService->getBook($id);
+        $this->viewService->display('@books/view.html', ['book' => $book]);
+    }
 }

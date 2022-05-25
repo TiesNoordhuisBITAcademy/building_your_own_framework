@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BYOF\services;
 
 use RedBeanPHP\R as R;
+use RedBeanPHP\BeanHelper\SimpleFacadeBeanHelper as SimpleFacadeBeanHelper;
 
 class ORMService
 {

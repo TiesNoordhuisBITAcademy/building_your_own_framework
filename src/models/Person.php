@@ -2,11 +2,11 @@
 
 namespace BYOF\models;
 
-use RedBeanPHP\SimpleModel as RedBean_SimpleModel;
+use RedBeanPHP\TypedModel as RBModel;
 
-class Person extends RedBean_SimpleModel
+class Person extends RBModel
 {
-    public function getFullName()
+    public function fullName(): string
     {
         return "{$this->first_name} {$this->last_name}";
     }

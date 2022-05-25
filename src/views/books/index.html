@@ -19,8 +19,9 @@
             {% for book in books %}
             <tr>
                 <td>{{ book.title }}</td>
-                <td>{{ book.__get('author').first_name }} {{ book.__get('author').last_name }}</td>
-                <td>{{ book.publisher }}</td>
+                <td>{{ book.author.fullName }}</td>
+                <td>{{ book.publisher.fullName }}</td>
+                <td><a href="/book/view/{{ book.id }}">details</a></td>
             </tr>
             {% endfor %}
         </tbody>

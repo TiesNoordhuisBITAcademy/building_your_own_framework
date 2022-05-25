@@ -2,9 +2,9 @@
 
 namespace BYOF\models;
 
-class Author extends Person
+class Publisher extends Person
 {
-    public function works()
+    public function books()
     {
         return $this->ownBookList;
     }

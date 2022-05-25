@@ -18,7 +18,8 @@ class SetupService extends ORMService
         $books[1]->title = 'Lord of the Rings';
         $books[1]->author = $author;
         $books[1]->publisher = $publisher;
-        $publisher->name = 'Houghton Mifflin';
+        $publisher->firstName = 'Houghton';
+        $publisher->lastName = 'Mifflin';
         $author->firstName = 'J.R.R.';
         $author->lastName = 'Tolkien';
         R::storeAll([...$books, $publisher, $author]);
