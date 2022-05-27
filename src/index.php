@@ -32,7 +32,7 @@ if (
     !class_exists($controllerClassPath)
     || !method_exists($controllerClassPath, $methodName)
 ) {
-    $viewService->display('@errors/404.html', statusCode: 404);
+    $viewService->display('@error/404.html', statusCode: 404);
     exit();
 }
 

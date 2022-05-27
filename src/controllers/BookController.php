@@ -13,31 +13,31 @@ class BookController extends BaseController
     {
         parent::__construct($viewService);
         $this->bookService = $bookService ?? new BookService();
-        $this->viewService->addPath('./views/books', 'books');
+        $this->viewService->addPath('./views/book', 'book');
     }
 
     public function index()
     {
         $books = $this->bookService->getAllBooks();
-        $this->viewService->display('@books/index.html', ['books' => $books]);
+        $this->viewService->display('@book/index.html', ['books' => $books]);
     }
 
     public function addBook()
     {
-        $this->viewService->display('@books/add.html');
+        $this->viewService->display('@book/add.html');
     }
 
     public function addBookPost()
     {
         $book = $_POST;
         $this->bookService->addBook($book);
-        header("location: /books");
+        header("location: /book");
         exit();
     }
 
     public function view(int $id)
     {
         $book = $this->bookService->getBook($id);
-        $this->viewService->display('@books/view.html', ['book' => $book]);
+        $this->viewService->display('@book/view.html', ['book' => $book]);
     }
 }

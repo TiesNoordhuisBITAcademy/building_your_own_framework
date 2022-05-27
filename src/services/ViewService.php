@@ -17,7 +17,7 @@ class ViewService
     {
         try {
             $this->loader = new TwigFilesystemLoader('./views');
-            $this->loader->addPath('./views/errors', 'errors');
+            $this->loader->addPath('./views/error', 'error');
             $this->environment = new TwigEnvironment($this->loader);
         } catch (TwigError $e) {
             $this->error("ViewService failed to initialize. {$e->getMessage()}");

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BYOF\services;
 
+use BYOF\models\Author;
 use RedBeanPHP\R as R;
 
 class AuthorService extends ORMService
@@ -16,5 +17,10 @@ class AuthorService extends ORMService
     public function addAuthor(array $author): void
     {
         R::store(R::dispense('author')->import($author));
+    }
+
+    public function getAuthor(int $id): Author
+    {
+        return Author::cast(R::findOne('author', 'id = ?', [$id]));
     }
 }
