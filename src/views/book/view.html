@@ -7,6 +7,6 @@
 <body>
     <a href="/book"><h2>Terug</h2></a>
     <h1>{{ book.title }}</h1>
-    <p>{{ book.author.fullName }}</p>
+    <p><a href="/author/view/{{ book.author.id }}">{{ book.author.fullName }}</a></p>
     <p>{{ book.publisher.fullName }}</p>
 </body>

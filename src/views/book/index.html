@@ -19,7 +19,7 @@
             {% for book in books %}
             <tr>
                 <td>{{ book.title }}</td>
-                <td>{{ book.author.fullName }}</td>
+                <td><a href="/author/view/{{ book.author.id }}">{{ book.author.fullName }}</a></td>
                 <td>{{ book.publisher.fullName }}</td>
                 <td><a href="/book/view/{{ book.id }}">details</a></td>
             </tr>

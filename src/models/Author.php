@@ -4,8 +4,10 @@ namespace BYOF\models;
 
 class Author extends Person
 {
-    public function works()
+    public function books()
     {
-        return $this->ownBookList;
+        return array_map(function ($book) {
+            return Book::cast($book);
+        }, $this->ownBookList);
     }
 }
