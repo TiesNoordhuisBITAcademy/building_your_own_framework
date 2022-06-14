@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Boeken</title>
+    <link rel="stylesheet" href="/public/assets/style.css">
 </head>
 <body>
     <h1>Boeken</h1>
@@ -24,6 +25,12 @@
                 <td><a href="/book/view/{{ book.id }}">details</a></td>
             </tr>
             {% endfor %}
+            <tr>
+                <td colspan="4">
+                    <a href="/book/add"><button>Nieuw boek</button></a>
+                </td>
+            </tr>
         </tbody>
     </table>
+
 </body>

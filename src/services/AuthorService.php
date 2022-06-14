@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BYOF\services;
 
 use BYOF\models\Author;
+use BYOF\exceptions\FrameworkException;
 use RedBeanPHP\R as R;
 
 class AuthorService extends ORMService
@@ -21,6 +22,9 @@ class AuthorService extends ORMService
 
     public function getAuthor(int $id): Author
     {
-        return Author::cast(R::findOne('author', 'id = ?', [$id]));
+        if ($author = R::findOne('author', 'id = ?', [$id])) {
+            return Author::cast($author);
+        }
+        throw new FrameworkException("Author does not exist", get_class($this), 1);
     }
 }

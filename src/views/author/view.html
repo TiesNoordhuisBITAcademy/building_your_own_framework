@@ -10,6 +10,6 @@
     <p>{{ author.firstName }}</p>
     <p>{{ author.lastName }}</p>
     {% for book in author.books %}
-            <p><a href="/book/view/{{ book.id }}">{{ book.title }}</a></p>
+        <p><a href="/book/view/{{ book.id }}">{{ book.title }}</a></p>
     {% endfor %}
 </body>

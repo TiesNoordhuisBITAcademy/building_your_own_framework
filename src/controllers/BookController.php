@@ -22,12 +22,12 @@ class BookController extends BaseController
         $this->viewService->display('@book/index.html', ['books' => $books]);
     }
 
-    public function addBook()
+    public function add()
     {
         $this->viewService->display('@book/add.html');
     }
 
-    public function addBookPost()
+    public function addPost()
     {
         $book = $_POST;
         $this->bookService->addBook($book);

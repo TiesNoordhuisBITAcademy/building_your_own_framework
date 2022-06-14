@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BYOF\services;
 
+use BYOF\exceptions\FrameworkException;
+use BYOF\exceptions\RouteException;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\Error as TwigError;
 use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
@@ -32,6 +34,24 @@ class ViewService
         } catch (TwigError $e) {
             $this->error("ViewService failed to display template. {$e->getMessage()}");
         }
+    }
+
+    public function displayException(FrameworkException $exception)
+    {
+        $data = [
+            'message' => $exception->getMessage(),
+            'source' => $exception->source,
+        ];
+        if ($exception instanceof RouteException) {
+            $data['type'] = 'routeException';
+            $data['originalRoute'] = $exception->originalRoute;
+            $data['expectedRoute'] = $exception->expectedRoute;
+        }
+        $this->display(
+            template: "@error/frameworkException.html",
+            data: $data,
+            statusCode: 500
+        );
     }
 
     private function error(string $logMessage = "ViewService error"): void

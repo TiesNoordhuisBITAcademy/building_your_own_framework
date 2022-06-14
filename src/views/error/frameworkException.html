@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ source }}</title>
+</head>
+<body>
+<h1>Framework Exception</h1>
+<a href="/"><h2>Back to home</h2></a>
+<h2>{{ message }}</h2>
+<h3>{{ source }}</h3>
+{% if type == 'routeException' %}
+<h4>Original route: {{ originalRoute }}</h4>
+<h4>Expected route: {{ expectedRoute }}</h4>
+{% endif %}
+</body>

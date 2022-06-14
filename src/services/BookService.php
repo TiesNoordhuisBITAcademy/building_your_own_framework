@@ -6,6 +6,7 @@ namespace BYOF\services;
 
 use RedBeanPHP\R as R;
 use BYOF\models\Book;
+use BYOF\exceptions\FrameworkException;
 
 class BookService extends ORMService
 {
@@ -21,6 +22,9 @@ class BookService extends ORMService
 
     public function getBook(int $id): Book
     {
-        return Book::cast(R::findOne('book', 'id = ?', [$id]));
+        if ($book = R::findOne('book', 'id = ?', [$id])) {
+            return Book::cast($book);
+        }
+        throw new FrameworkException("Book does not exist", get_class($this), 1);
     }
 }

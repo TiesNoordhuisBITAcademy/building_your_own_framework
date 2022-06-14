@@ -7,6 +7,7 @@ namespace BYOF;
 require_once '../vendor/autoload.php';
 
 use BYOF\services\ViewService;
+use BYOF\exceptions\FrameworkException;
 
 $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -38,8 +39,14 @@ if (
 
 
 $controller = new $controllerClassPath($viewService);
-$methodParams = getMethodParams($controllerClassPath, $methodName);
-if (count($methodParams) > 0) {
-    $controller->$methodName(...mapArgumentsToParams($arguments, $methodParams));
+try {
+    if (count($methodParams = getMethodParams($controllerClassPath, $methodName)) > 0) {
+        $controller->$methodName(...mapArgumentsToParams($arguments, $methodParams));
+    } else {
+        $controller->$methodName();
+    }
+} catch (FrameworkException $exception) {
+    $viewService->displayException($exception);
+} catch (\Throwable $th) {
+    //throw $th;
 }
-$controller->$methodName();
