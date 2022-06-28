@@ -11,6 +11,9 @@ function getMethodParams(string $className, string $methodName): array
     }, $params);
 }
 
+/**
+ * @throws \RouteException when the arguments don't match the required types
+ */
 function mapArgumentsToParams(string $rawArguments, array $params): array
 {
     $numberOfParams = count($params);
@@ -30,4 +33,3 @@ function mapArgumentsToParams(string $rawArguments, array $params): array
     }
     return $arguments;
 }
-

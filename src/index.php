@@ -47,6 +47,4 @@ try {
     }
 } catch (FrameworkException $exception) {
     $viewService->displayException($exception);
-} catch (\Throwable $th) {
-    //throw $th;
 }
