@@ -33,3 +33,9 @@ function mapArgumentsToParams(string $rawArguments, array $params): array
     }
     return $arguments;
 }
+
+function getRootFromFullClassname($className)
+{
+    $baseClassName = basename(str_replace('\\', '/', $className));
+    return strtolower(str_replace('Controller', '', $baseClassName));
+}

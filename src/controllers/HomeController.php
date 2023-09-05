@@ -10,7 +10,7 @@ class HomeController extends BaseController
 {
     public function index()
     {
-        $this->viewService->display('homeIndex.html');
+        $this->viewService->display('index');
     }
 
     public function setup()

@@ -9,22 +9,23 @@ use BYOF\services\BookService;
 
 class BookController extends BaseController
 {
+    private BookService $bookService;
+
     public function __construct(ViewService $viewService, BookService $bookService = null)
     {
         parent::__construct($viewService);
         $this->bookService = $bookService ?? new BookService();
-        $this->viewService->addPath('./views/book', 'book');
     }
 
     public function index()
     {
         $books = $this->bookService->getAllBooks();
-        $this->viewService->display('@book/index.html', ['books' => $books]);
+        $this->viewService->display('index', ['books' => $books]);
     }
 
     public function add()
     {
-        $this->viewService->display('@book/add.html');
+        $this->viewService->display('add');
     }
 
     public function addPost()
@@ -38,6 +39,6 @@ class BookController extends BaseController
     public function view(int $id)
     {
         $book = $this->bookService->getBook($id);
-        $this->viewService->display('@book/view.html', ['book' => $book]);
+        $this->viewService->display('view', ['book' => $book]);
     }
 }

@@ -33,7 +33,7 @@ if (
     !class_exists($controllerClassPath)
     || !method_exists($controllerClassPath, $methodName)
 ) {
-    $viewService->display('@error/404.html', statusCode: 404);
+    $viewService->display('404', statusCode: 404, namespace: 'error');
     exit();
 }
 
@@ -47,4 +47,6 @@ try {
     }
 } catch (FrameworkException $exception) {
     $viewService->displayException($exception);
+} catch (\Throwable $th) {
+    $viewService->error($th->getMessage());
 }

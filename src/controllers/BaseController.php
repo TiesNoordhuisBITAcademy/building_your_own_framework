@@ -13,5 +13,6 @@ class BaseController
     public function __construct(ViewService $viewService)
     {
         $this->viewService = $viewService;
+        $this->viewService->setDefaultPath(getRootFromFullClassname(get_class($this)));
     }
 }

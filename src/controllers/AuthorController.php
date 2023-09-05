@@ -9,22 +9,23 @@ use BYOF\services\AuthorService;
 
 class AuthorController extends BaseController
 {
+    private AuthorService $authorService;
+
     public function __construct(ViewService $viewService, AuthorService $authorService = null)
     {
         parent::__construct($viewService);
         $this->authorService = $authorService ?? new AuthorService();
-        $this->viewService->addPath('./views/author', 'author');
     }
 
     public function index()
     {
         $authors = $this->authorService->getAllAuthors();
-        $this->viewService->display('@author/index.html', ['authors' => $authors]);
+        $this->viewService->display('index', ['authors' => $authors]);
     }
 
     public function addAuthor()
     {
-        $this->viewService->display('@author/add.html');
+        $this->viewService->display('add');
     }
 
     public function addAuthorPost()
@@ -38,6 +39,6 @@ class AuthorController extends BaseController
     public function view(int $id)
     {
         $author = $this->authorService->getAuthor($id);
-        $this->viewService->display('@author/view.html', ['author' => $author]);
+        $this->viewService->display('view', ['author' => $author]);
     }
 }
