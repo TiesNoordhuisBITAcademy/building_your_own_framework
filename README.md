@@ -53,3 +53,8 @@ RewriteEngine on
 
 RewriteRule ^(.*)$ index.php [NC,L,QSA]
 ```
+
+`index.php` is responsible to the routing. All valid requests are send to the relevant controller and method with optionaly the arguments base on this pattern: `root_url/controller/method/param1/param2..`  
+These values are also sent with each response using custom header keys `X-Controller` and `X-Method` for easy debugging.  
+Controllers make use of services, specificly for displaying content (`ViewService`) and for data CRUD actions (services extended from `ORMService`)  
+The ORM allows for mapping the data to models, which are specified in the `models` folder.  
