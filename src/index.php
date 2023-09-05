@@ -37,7 +37,6 @@ if (
     exit();
 }
 
-
 $controller = new $controllerClassPath($viewService);
 try {
     if (count($methodParams = getMethodParams($controllerClassPath, $methodName)) > 0) {

@@ -12,14 +12,16 @@ use Twig\Loader\FilesystemLoader as TwigFilesystemLoader;
 
 class ViewService
 {
+    private const VIEWS_PATH = './views';
+
     private TwigFilesystemLoader $loader;
     private TwigEnvironment $environment;
-    private string $defaultNamespace = '__main';
+    private string $defaultNamespace = '__main__';
 
     public function __construct()
     {
         try {
-            $this->loader = new TwigFilesystemLoader('./views');
+            $this->loader = new TwigFilesystemLoader(self::VIEWS_PATH);
             $this->environment = new TwigEnvironment($this->loader);
             $this->addPath('error');
         } catch (TwigError $e) {
@@ -27,7 +29,7 @@ class ViewService
         }
     }
 
-    public function setDefaultPath($namespace)
+    public function setDefaultPath(string $namespace): void
     {
         $this->addPath($namespace);
         $this->defaultNamespace = $namespace;
@@ -49,23 +51,23 @@ class ViewService
         }
     }
 
-    public function displayException(FrameworkException $exception)
+    public function displayException(FrameworkException $exception): void
     {
+        $data = [
+            'message' => $exception->getMessage(),
+            'source' => $exception->source,
+        ];
+        if ($exception instanceof RouteException) {
+            $data['type'] = 'routeException';
+            $data['originalRoute'] = $exception->originalRoute;
+            $data['expectedRoute'] = $exception->expectedRoute;
+        }
         try {
-            $data = [
-                'message' => $exception->getMessage(),
-                'source' => $exception->source,
-            ];
-            if ($exception instanceof RouteException) {
-                $data['type'] = 'routeException';
-                $data['originalRoute'] = $exception->originalRoute;
-                $data['expectedRoute'] = $exception->expectedRoute;
-            }
             $this->display(
                 template: "frameworkException",
                 data: $data,
                 statusCode: 500,
-                namespace: 'error',
+                namespace: 'error'
             );
         } catch (TwigError $e) {
             $this->error("ViewService failed to display exception template. {$e->getMessage()}");
@@ -84,10 +86,12 @@ class ViewService
         if (!empty($this->loader->getPaths($namespace))) {
             throw new FrameworkException("$namespace path already exists", 'viewService');
         }
-        $path = "./views/$namespace";
+
+        $path = self::VIEWS_PATH . "/$namespace";
         if (!is_dir($path)) {
             throw new FrameworkException("$path directory for templates does not exist", "viewService");
         }
+
         $this->loader->addPath($path, $namespace);
     }
 }
