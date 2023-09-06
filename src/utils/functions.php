@@ -16,6 +16,10 @@ function getMethodParams(string $className, string $methodName): array
  */
 function mapArgumentsToParams(string $rawArguments, array $params): array
 {
+    $is_boolean = function ($value): bool {
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== null;
+    };
+
     $numberOfParams = count($params);
     $arguments = explode('/', $rawArguments, $numberOfParams);
     foreach ($params as $index => $param) {
@@ -24,8 +28,8 @@ function mapArgumentsToParams(string $rawArguments, array $params): array
             'int' => $arg = is_numeric($arg)
                 ? intval($arg)
                 : throw new RouteException("Expecting int", $rawArguments, $params),
-            'bool' => $arg = is_bool($arg)
-                ? boolval($arg)
+            'bool' => $arg = $is_boolean($arg)
+                ? filter_var($arg, FILTER_VALIDATE_BOOLEAN)
                 : throw new RouteException("Expecting bool", $rawArguments, $params),
             'array' && $index === $numberOfParams - 1 => $arg = explode('/', $arguments[$index]),
             default => $arguments[$index] = (string) $arguments[$index]
