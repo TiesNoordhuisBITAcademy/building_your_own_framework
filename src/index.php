@@ -31,13 +31,23 @@ $viewService = new ViewService();
 
 if (
     !class_exists($controllerClassPath)
-    || !method_exists($controllerClassPath, $methodName)
+    || !is_subclass_of($controllerClassPath, 'BaseController')
+) {
+    $viewService->display('404', statusCode: 404, namespace: 'error');
+    exit();
+}
+    
+$controller = new $controllerClassPath($viewService);
+
+if (
+    !is_callable([$controller, $methodName])
+    || !method_exists($controller, $methodName)
+    || str_starts_with($methodName, '__')
 ) {
     $viewService->display('404', statusCode: 404, namespace: 'error');
     exit();
 }
 
-$controller = new $controllerClassPath($viewService);
 try {
     if (count($methodParams = getMethodParams($controllerClassPath, $methodName)) > 0) {
         $controller->$methodName(...mapArgumentsToParams($arguments, $methodParams));
