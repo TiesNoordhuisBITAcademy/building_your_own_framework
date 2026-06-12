@@ -29,6 +29,9 @@ $controllerClassPath = "BYOF\controllers\\{$controllerName}Controller";
 
 $viewService = new ViewService();
 
+$controller_class_exists = class_exists($controllerClassPath);
+header("X-Controller-check: $controller_class_exists");
+
 if (
     !class_exists($controllerClassPath)
     || !is_subclass_of($controllerClassPath, 'BaseController')
