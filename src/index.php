@@ -6,6 +6,7 @@ namespace BYOF;
 
 require_once '../vendor/autoload.php';
 
+use BYOF\controllers\BaseController;
 use BYOF\services\ViewService;
 use BYOF\exceptions\FrameworkException;
 
@@ -29,24 +30,28 @@ $controllerClassPath = "BYOF\controllers\\{$controllerName}Controller";
 
 $viewService = new ViewService();
 
-// if (
-//     !class_exists($controllerClassPath)
-//     || !is_subclass_of($controllerClassPath, 'BaseController')
-// ) {
-//     $viewService->display('404', statusCode: 404, namespace: 'error');
-//     exit();
-// }
+$controllerClassExists = class_exists($controllerClassPath);
+$controllerExtendsBase = is_subclass_of($controllerClassPath, BaseController::class, true);
+
+header('X-Controller-Check: ' . "exists: $controllerClassExists; extends_base: $controllerExtendsBase;");
+
+if (!$controllerClassExists || !$controllerExtendsBase) {
+    $viewService->display('404', statusCode: 404, namespace: 'error');
+    exit();
+}
     
 $controller = new $controllerClassPath($viewService);
 
-// if (
-//     !is_callable([$controller, $methodName])
-//     || !method_exists($controller, $methodName)
-//     || str_starts_with($methodName, '__')
-// ) {
-//     $viewService->display('404', statusCode: 404, namespace: 'error');
-//     exit();
-// }
+$methodIsCallable = is_callable([$controller, $methodName]);
+$methodExists = method_exists($controller, $methodName);
+$methodIsMagic = str_starts_with($methodName, '__');
+
+header('X-Method-Check: ' . "is_callable: $methodIsCallable; exists: $methodExists; magic: $methodIsMagic");
+
+if (!$methodIsCallable || !$methodExists || $methodIsMagic ) {
+    $viewService->display('404', statusCode: 404, namespace: 'error');
+    exit();
+}
 
 try {
     if (count($methodParams = getMethodParams($controllerClassPath, $methodName)) > 0) {
