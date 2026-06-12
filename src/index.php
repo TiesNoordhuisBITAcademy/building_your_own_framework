@@ -29,24 +29,24 @@ $controllerClassPath = "BYOF\controllers\\{$controllerName}Controller";
 
 $viewService = new ViewService();
 
-if (
-    !class_exists($controllerClassPath)
-    || !is_subclass_of($controllerClassPath, 'BaseController')
-) {
-    $viewService->display('404', statusCode: 404, namespace: 'error');
-    exit();
-}
+// if (
+//     !class_exists($controllerClassPath)
+//     || !is_subclass_of($controllerClassPath, 'BaseController')
+// ) {
+//     $viewService->display('404', statusCode: 404, namespace: 'error');
+//     exit();
+// }
     
 $controller = new $controllerClassPath($viewService);
 
-if (
-    !is_callable([$controller, $methodName])
-    || !method_exists($controller, $methodName)
-    || str_starts_with($methodName, '__')
-) {
-    $viewService->display('404', statusCode: 404, namespace: 'error');
-    exit();
-}
+// if (
+//     !is_callable([$controller, $methodName])
+//     || !method_exists($controller, $methodName)
+//     || str_starts_with($methodName, '__')
+// ) {
+//     $viewService->display('404', statusCode: 404, namespace: 'error');
+//     exit();
+// }
 
 try {
     if (count($methodParams = getMethodParams($controllerClassPath, $methodName)) > 0) {
